@@ -2,6 +2,10 @@
 shopt -s expand_aliases
 alias webtorrent-sh="docker run --net host --name webtorrent-seed -it -d --rm -v $PWD/downloads:/downloads -u $(id -u):$(id -g) webtorrent-seed"
 
+if [ ! -f "source.txt" ]; then
+    cp source-example.txt source.txt
+fi
+
 SOURCE=`tr '\n' ' ' < source.txt`
 
 if [ ! "$(docker images -q -f reference=webtorrent-seed)" ]; then
