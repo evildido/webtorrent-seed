@@ -1,6 +1,6 @@
 #!/bin/bash
 shopt -s expand_aliases
-alias webtorrent-sh="docker run --net host --name webtorrent-seed -d -it --rm -v $PWD/downloads:/downloads -u $(id -u):$(id -g) webtorrent-seed"
+alias webtorrent-sh="docker run --net host --name webtorrent-seed -it -d --rm -v $PWD/downloads:/downloads -u $(id -u):$(id -g) webtorrent-seed"
 
 SOURCE=`tr '\n' ' ' < source.txt`
 
@@ -12,7 +12,7 @@ fi
 if [ ! "$(docker ps -q -f name=webtorrent-seed)" ]; then
     if [ "$(docker ps -aq -f status=exited -f name=webtorrent-seed)" ]; then
         # cleanup
-        docker rm webtorrent
+        docker rm -f webtorrent-seed
     fi
     # run your container
     webtorrent-sh --keep-seeding download $SOURCE
